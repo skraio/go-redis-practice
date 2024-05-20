@@ -7,13 +7,19 @@ import (
 )
 
 func (app *application) routes() http.Handler {
-    router := httprouter.New()
+	router := httprouter.New()
 
-    router.NotFound = http.HandlerFunc(app.notFoundResponse)
-    router.MethodNotAllowed = http.HandlerFunc(app.methodNotAllowedResponse)
+	router.NotFound = http.HandlerFunc(app.notFoundResponse)
+	router.MethodNotAllowed = http.HandlerFunc(app.methodNotAllowedResponse)
 
-    router.HandlerFunc(http.MethodPost, "/set", app.createRecordHandler)
-    router.HandlerFunc(http.MethodGet, "/get/:key", app.showRecordHandler)
+	router.HandlerFunc(http.MethodPost, "/record", app.createRecordHandler)
+	router.HandlerFunc(http.MethodGet, "/record/:key", app.showRecordHandler)
+	router.HandlerFunc(http.MethodDelete, "/record/:key", app.deleteRecordHandler)
 
-    return app.recoverPanic(router)
+	router.HandlerFunc(http.MethodPut, "/record/:key/increment", app.incrRecordValueHandler)
+	router.HandlerFunc(http.MethodPut, "/record/:key/decrement", app.decrRecordValueHandler)
+	router.HandlerFunc(http.MethodPut, "/record/:key/increment-by", app.incrbyRecordValueHandler)
+	router.HandlerFunc(http.MethodPut, "/record/:key/decrement-by", app.decrbyRecordValueHandler)
+
+	return app.recoverPanic(router)
 }

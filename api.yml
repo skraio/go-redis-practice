@@ -1,0 +1,384 @@
+openapi: 3.0.0
+info:
+  title: mini-godis API
+  version: 1.0.0
+  description: API документация для сервиса mini-godis
+
+paths:
+
+  /record:
+    post:
+      summary: Создание новой записи
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  example: "example"
+                value:
+                  type: integer
+                  example: 0
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record successfully created"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+  /record/{key}:
+    get:
+      summary: Получение записи по ключу
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      responses:
+        '200':
+          description: Запись
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  record:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: integer
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+    delete:
+      summary: Удаление записи по ключу
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      responses:
+        '204':
+          description: Запись успешно удалена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record successfully deleted"
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+  /record/{key}/increment:
+    put:
+      summary: Увеличение значения  записи по ключу на 1
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      responses:
+        '200':
+          description: Успешное увеличение значения
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record incremented by 1"
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+  /record/{key}/decrement:
+    put:
+      summary: Уменьшение значения  записи по ключу на 1
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      responses:
+        '200':
+          description: Успешное уменьшение значения
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record decremented by 1"
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+  /record/{key}/increment-by:
+    put:
+      summary: Увеличение значения  записи по ключу на заданное число
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term:
+                  type: integer
+                  example: 15
+      responses:
+        '200':
+          description: Успешное увеличение значения
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record incremented by 15"
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
+  /record/{key}/decremented-by:
+    put:
+      summary: Уменьшение значения  записи по ключу на заданное число
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+          description: Ключ записи
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term:
+                  type: integer
+                  example: 15
+      responses:
+        '200':
+          description: Успешное уменьшение значения
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "record decremented by 15"
+        '400':
+          description: Некорректные данные
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Запись не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the requested resource could not be found"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "the server encountered a problem and could not process your request"
+
