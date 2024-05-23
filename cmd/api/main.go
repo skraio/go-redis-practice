@@ -10,7 +10,7 @@ import (
 
 	_ "github.com/joho/godotenv" // use for testing locally
 	"github.com/redis/go-redis/v9"
-	"github.com/skraio/mini-godis/internal/data"
+	"github.com/skraio/go-redis-practice/internal/data"
 )
 
 type config struct {

@@ -1,4 +1,4 @@
-module github.com/skraio/mini-godis
+module github.com/skraio/go-redis-practice
 
 go 1.22.2
 

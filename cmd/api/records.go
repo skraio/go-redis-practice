@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/skraio/mini-godis/internal/data"
-	"github.com/skraio/mini-godis/internal/validator"
+	"github.com/skraio/go-redis-practice/internal/data"
+	"github.com/skraio/go-redis-practice/internal/validator"
 )
 
 func (app *application) createRecordHandler(w http.ResponseWriter, r *http.Request) {

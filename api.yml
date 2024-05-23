@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: mini-godis API
+  title: API
   version: 1.0.0
-  description: API документация для сервиса mini-godis
+  description: API документация для сервиса
 
 paths:
 

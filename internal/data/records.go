@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/skraio/mini-godis/internal/validator"
+	"github.com/skraio/go-redis-practice/internal/validator"
 )
 
 type Record struct {
